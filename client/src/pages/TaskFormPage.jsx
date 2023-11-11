@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast' /* importamos libreria para usar el efec
 
 export function TaskFormPage() {
 
+
     const { register, handleSubmit, formState: { errors }, setValue } = useForm() /* aqui importamos una funcion nativa llamada "register(para importar imputs)" del modulo useForm */
     /* handleSubmit es una funcion que maneja el envio del formulario */
     /* formState:{errors} es un objeto que se estará llenando condatos si es que hay errores  */
@@ -59,47 +60,68 @@ export function TaskFormPage() {
 
     /*  aqui se retorna lo que podemos visualizar en pantalla */
     return (
-        <div className='max-w-xl mx-auto'>
+        <div class="formularioarea"/* className=' w-[60vw] h-[50vh] mx-auto' */>
             <form onSubmit={onSubmit}> {/* aqui le pasamos a la "variable" onSubmit la "funcion" onSubmit que se ejecutará con el "boton"*/}
-                <input
-                    type="text"
-                    placeholder="Title"
-                    {...register("title", { required: true })} /* la funcion ...register guardara lo que reciba en un apartado llamado "title"  */
-                    className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
-                />
-                {errors.title && <span>Title is required</span>} {/* si ocurrio un error en el titulo nos mostrara un "span"*/}
 
-                <textarea
-                    rows="3"
-                    placeholder="Description"
-                    {...register("description", { required: true })} /* agregamos ...register ahora para el "textarea" */
-                    className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
-                ></textarea> {/* un apartado para el area de texto */}
-                {errors.description && <span>Description is required</span>} {/* si ocurrio un error en el titulo nos mostrara un "span"*/}
+                <div class="contenedor_titulo">
+                    <input
+                        class="formulariotitulo"
+                        type="text"
+                        placeholder="Title"
+                        {...register("title", { required: true })} /* la funcion ...register guardara lo que reciba en un apartado llamado "title"  */
+                    /* className='shadow-[0px_0px_25px_blue]  bg-zinc-700 p-3 rounded-lg block w-full h-[10vh] mb-3' */
+                    />
+                    {errors.title && <span class="spantext1">Title is required</span>} {/* si ocurrio un error en el titulo nos mostrara un "span"*/}
 
-                <button
-                    className='bg-indigo-500 p-3 rounded-lg block w-full mt-3'
-                >Save</button> {/* y un boton que ejecutara la accion de guardar */}
+                </div>
+
+                <div class="contenedor_texto">
+                    <textarea
+                        class="formulariotexto"
+                        rows="3"
+                        placeholder="Description"
+                        {...register("description", { required: true })} /* agregamos ...register ahora para el "textarea" */
+                    /* className='shadow-cyan-400 shadow-inner bg-zinc-700 p-3 rounded-lg block w-full h-[30vh] mb-3' */
+                    ></textarea> {/* un apartado para el area de texto */}
+                    {errors.description && <span class="spantext2">Description is required</span>} {/* si ocurrio un error en el titulo nos mostrara un "span"*/}
+
+                </div>
+
+                <div class='botones'>
+                    <div class='boton_save'>
+                        <button
+                            className=' p-3 rounded-lg w-[15vw] h-[8vh] mx-auto mt-3'
+                        >Save</button> {/* y un boton que ejecutara la accion de guardar */}
+                    </div>
+
+                    {/* si params.id contiene algo entonces muestra el boton */}
+
+                    {params.id &&
+                        <div class='boton_delete'>
+                            <button className=' rounded-lg w-[15vw] h-[8vh] mt-3' onClick={async () => {
+                                const acepted = window.confirm('are you shure?') /* definimos una varibale que guardara la confirmacion emergente */
+                                if (acepted) {  /* si "acepted" es true continua */
+                                    await deleteTask(params.id) /* esperamos la respuesta de que se realizó corerectamente */
+                                    toast.success('Successfully deleted task', { /* una vez se cree una tarea invocamos la animacion "toast" */
+                                        position: "bottom-right",
+                                        style: {
+                                            background: '#333',
+                                            color: '#fff',
+                                        }
+                                    })
+                                    navigate("/tasks"); /* despues nos dirigimos a la ruta de listas */
+
+                                }
+                            }}>Delete</button>
+                        </div>
+                    }
+                </div>
+
+
+
             </form>
-            {/* si params.id contiene algo entonces muestra el boton */}
-            {params.id && 
-            <div className='flex justify-end'>
-                <button className='bg-red-500 p-3 rounded-lg w-48 mt-3' onClick={async () => {
-                const acepted = window.confirm('are you shure?') /* definimos una varibale que guardara la confirmacion emergente */
-                if (acepted) {  /* si "acepted" es true continua */
-                    await deleteTask(params.id) /* esperamos la respuesta de que se realizó corerectamente */
-                    toast.success('Successfully deleted task', { /* una vez se cree una tarea invocamos la animacion "toast" */
-                        position: "bottom-right",
-                        style: {
-                            background: '#333',
-                            color: '#fff',
-                        }
-                    })
-                    navigate("/tasks"); /* despues nos dirigimos a la ruta de listas */
 
-                }}}>Delete</button>
-            </div>
-            }
+
         </div>
     )
 }
