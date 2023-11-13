@@ -90,7 +90,7 @@ export function TaskFormPage() {
                 <div class='botones'>
                     <div class='boton_save'>
                         <button
-                            className=' p-3 rounded-lg w-[15vw] h-[8vh] mx-auto mt-3'
+                            /* className=' p-3 rounded-lg w-[15vw] h-[8vh] mx-auto mt-3' */
                         >Save</button> {/* y un boton que ejecutara la accion de guardar */}
                     </div>
 
