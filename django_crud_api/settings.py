@@ -78,12 +78,28 @@ WSGI_APPLICATION = 'django_crud_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+#mysql://root:G2Eg6b4heeaE-CBbCBCacAeEcBD3f15e@roundhouse.proxy.rlwy.net:32959/railway
+
+
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+} """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER' : 'root',
+        'PASSWORD': 'G2Eg6b4heeaE-CBbCBCacAeEcBD3f15e',
+        'HOST':'roundhouse.proxy.rlwy.net',
+        'PORT':'32959',
+    }
 }
+
+
 
 
 # Password validation
